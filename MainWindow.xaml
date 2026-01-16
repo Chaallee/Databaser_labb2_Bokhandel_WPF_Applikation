@@ -5,102 +5,128 @@
         Height="550"
         Width="900"
         FontFamily="Arial"
-        FontSize="13">
+        FontSize="13"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp">
 
-    <Grid Margin="16">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0"
-                   Text="Lagersaldo per butik"
-                   FontSize="22"
-                   FontWeight="SemiBold"
-                   Margin="0,0,0,12"/>
+        <Menu Grid.Row="0">
+            <MenuItem Header="_Alternativ">
+                <MenuItem Header="Lägg till bok"
+                 Icon="{fa:Icon book}"
+                          />
+                
 
-        <DataGrid Grid.Row="1"
-                  ItemsSource="{Binding StockItems}"
-                  AutoGenerateColumns="False"
-                  IsReadOnly="True"
-                  CanUserAddRows="False"
-                  HeadersVisibility="Column"
-                  GridLinesVisibility="Horizontal"
-                  RowBackground="#F9F9F9"
-                  AlternatingRowBackground="#EFEFEF"
-                  Margin="0,0,0,12">
+                <MenuItem Header="_Uppdatera databas"
+                Icon="{fa:Icon arrowrotateright}"
+                          />
 
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Butik"
-                                    Binding="{Binding Butiks.Butiksnamn}"
-                                    Width="2*"/>
+                <MenuItem Header="Avsluta"
+                          Command="{Binding ExitCommand}" 
+                          Icon="{fa:Icon dooropen}"
+                          />
+            </MenuItem>
+        </Menu>
 
-                <DataGridTextColumn Header="Titel"
-                                    Binding="{Binding Isbn13Navigation.Titel}"
-                                    Width="3*"/>
+        <Grid Grid.Row="1" Margin="16">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-                <DataGridTextColumn Header="Författare"
-                    Binding="{Binding Isbn13Navigation.FörfattareFulltNamn}"
-                    Width="2*" />
+            <TextBlock Grid.Row="0"
+                       Text="Lagersaldo per butik"
+                       FontSize="22"
+                       FontWeight="SemiBold"
+                       Margin="0,0,0,12"/>
 
-                <DataGridTextColumn Header="Antal böcker"
-                                    Binding="{Binding Antal}"
-                                    Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>
+            <DataGrid Grid.Row="1"
+                      ItemsSource="{Binding StockItems}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      CanUserAddRows="False"
+                      HeadersVisibility="Column"
+                      GridLinesVisibility="Horizontal"
+                      RowBackground="#F9F9F9"
+                      AlternatingRowBackground="#EFEFEF"
+                      Margin="0,0,0,12">
 
-        <Border Grid.Row="2"
-                BorderBrush="Black"
-                BorderThickness="1"
-                Padding="12"
-                CornerRadius="6">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Butik"
+                                        Binding="{Binding Butiks.Butiksnamn}"
+                                        Width="2*"/>
 
-            <StackPanel Orientation="Vertical">
+                    <DataGridTextColumn Header="Titel"
+                                        Binding="{Binding Isbn13Navigation.Titel}"
+                                        Width="3*"/>
 
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                    <TextBlock Text="Butik:"
-                               Width="60"
-                               VerticalAlignment="Center"/>
+                    <DataGridTextColumn Header="Författare"
+                                        Binding="{Binding Isbn13Navigation.FörfattareFulltNamn}"
+                                        Width="2*" />
 
-                    <ComboBox Width="220"
-                              ItemsSource="{Binding Stores}"
-                              SelectedItem="{Binding SelectedStore}"
-                              DisplayMemberPath="Butiksnamn"/>
+                    <DataGridTextColumn Header="Antal böcker"
+                                        Binding="{Binding Antal}"
+                                        Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Border Grid.Row="2"
+                    BorderBrush="Black"
+                    BorderThickness="1"
+                    Padding="12"
+                    CornerRadius="6">
+
+                <StackPanel Orientation="Vertical">
+
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                        <TextBlock Text="Butik:"
+                                   Width="60"
+                                   VerticalAlignment="Center"/>
+
+                        <ComboBox Width="220"
+                                  ItemsSource="{Binding Stores}"
+                                  SelectedItem="{Binding SelectedStore}"
+                                  DisplayMemberPath="Butiksnamn"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                        <TextBlock Text="Bok:"
+                                   Width="60"
+                                   VerticalAlignment="Center"/>
+
+                        <ComboBox Width="360"
+                                  ItemsSource="{Binding Books}"
+                                  SelectedItem="{Binding SelectedBook}"
+                                  DisplayMemberPath="Titel"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Antal:"
+                                   Width="60"
+                                   VerticalAlignment="Center"/>
+
+                        <TextBox Width="80"
+                                 Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <Button Content="Lägg till"
+                                Width="110"
+                                Margin="12,0,0,0"
+                                Command="{Binding AddCommand}"/>
+
+                        <Button Content="Ta bort"
+                                Width="110"
+                                Margin="8,0,0,0"
+                                Command="{Binding RemoveCommand}"/>
+                    </StackPanel>
+
                 </StackPanel>
+            </Border>
 
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                    <TextBlock Text="Bok:"
-                               Width="60"
-                               VerticalAlignment="Center"/>
-
-                    <ComboBox Width="360"
-                              ItemsSource="{Binding Books}"
-                              SelectedItem="{Binding SelectedBook}"
-                              DisplayMemberPath="Titel"/>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Antal:"
-                               Width="60"
-                               VerticalAlignment="Center"/>
-
-                    <TextBox Width="80"
-                             Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}"/>
-
-                    <Button Content="Lägg till"
-                            Width="110"
-                            Margin="12,0,0,0"
-                            Command="{Binding AddCommand}"/>
-
-                    <Button Content="Ta bort"
-                            Width="110"
-                            Margin="8,0,0,0"
-                            Command="{Binding RemoveCommand}"/>
-                </StackPanel>
-
-            </StackPanel>
-        </Border>
-
+        </Grid>
     </Grid>
 </Window>

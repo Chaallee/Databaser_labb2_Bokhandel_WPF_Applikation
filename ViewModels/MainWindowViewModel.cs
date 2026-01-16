@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Bokhandel_WPF_Applikation.ViewModels;
@@ -38,12 +39,22 @@ public class MainWindowViewModel : ViewModelBase
     public ICommand AddCommand { get; }
     public ICommand RemoveCommand { get; }
 
+    public ICommand ExitCommand { get; }
+
     public MainWindowViewModel(BokhandelContext context)
     {
         _context = context;
 
         AddCommand = new RelayCommand(AddAsync);
         RemoveCommand = new RelayCommand(RemoveAsync);
+
+        ExitCommand = new RelayCommand(async () =>
+        {
+            Application.Current.Shutdown();
+            await Task.CompletedTask;
+        });
+
+
 
         _ = LoadAsync();
     }
