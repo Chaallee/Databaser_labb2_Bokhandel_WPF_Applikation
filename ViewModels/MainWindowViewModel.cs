@@ -37,6 +37,7 @@ public class MainWindowViewModel : ViewModelBase
     }
 
     public ICommand AddCommand { get; }
+    public ICommand RefreshCommand { get; }
     public ICommand RemoveCommand { get; }
 
     public ICommand ExitCommand { get; }
@@ -45,6 +46,7 @@ public class MainWindowViewModel : ViewModelBase
     {
         _context = context;
 
+        RefreshCommand = new RelayCommand(LoadAsync);
         AddCommand = new RelayCommand(AddAsync);
         RemoveCommand = new RelayCommand(RemoveAsync);
 
