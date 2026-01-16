@@ -63,7 +63,9 @@ public class MainWindowViewModel : ViewModelBase
         var stock = await _context.Lagersaldos
             .Include(l => l.Butiks)
             .Include(l => l.Isbn13Navigation)
+                .ThenInclude(b => b.Författare)
             .ToListAsync();
+
 
         foreach (var l in stock)
             StockItems.Add(l);

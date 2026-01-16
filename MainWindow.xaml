@@ -40,11 +40,11 @@
                                     Binding="{Binding Isbn13Navigation.Titel}"
                                     Width="3*"/>
 
-                <DataGridTextColumn Header="ISBN"
-                                    Binding="{Binding Isbn13}"
-                                    Width="2*"/>
+                <DataGridTextColumn Header="Författare"
+                    Binding="{Binding Isbn13Navigation.FörfattareFulltNamn}"
+                    Width="2*" />
 
-                <DataGridTextColumn Header="Antal"
+                <DataGridTextColumn Header="Antal böcker"
                                     Binding="{Binding Antal}"
                                     Width="*"/>
             </DataGrid.Columns>
