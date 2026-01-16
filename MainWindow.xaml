@@ -3,70 +3,104 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Bokhandel – Lagersaldo"
         Height="550"
-        Width="900">
+        Width="900"
+        FontFamily="Arial"
+        FontSize="13">
 
-    <Grid Margin="10">
+    <Grid Margin="16">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <DataGrid Grid.Row="0"
+        <TextBlock Grid.Row="0"
+                   Text="Lagersaldo per butik"
+                   FontSize="22"
+                   FontWeight="SemiBold"
+                   Margin="0,0,0,12"/>
+
+        <DataGrid Grid.Row="1"
                   ItemsSource="{Binding StockItems}"
                   AutoGenerateColumns="False"
                   IsReadOnly="True"
-                  CanUserAddRows="False">
+                  CanUserAddRows="False"
+                  HeadersVisibility="Column"
+                  GridLinesVisibility="Horizontal"
+                  RowBackground="#F9F9F9"
+                  AlternatingRowBackground="#EFEFEF"
+                  Margin="0,0,0,12">
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Butik"
-                                    Binding="{Binding Butiks.Butiksnamn}" />
+                                    Binding="{Binding Butiks.Butiksnamn}"
+                                    Width="2*"/>
 
                 <DataGridTextColumn Header="Titel"
-                                    Binding="{Binding Isbn13Navigation.Titel}" />
+                                    Binding="{Binding Isbn13Navigation.Titel}"
+                                    Width="3*"/>
 
                 <DataGridTextColumn Header="ISBN"
-                                    Binding="{Binding Isbn13}" />
+                                    Binding="{Binding Isbn13}"
+                                    Width="2*"/>
 
                 <DataGridTextColumn Header="Antal"
-                                    Binding="{Binding Antal}" />
+                                    Binding="{Binding Antal}"
+                                    Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 
-        <StackPanel Grid.Row="1"
-                    Margin="0,15,0,0"
-                    Orientation="Vertical">
+        <Border Grid.Row="2"
+                BorderBrush="Black"
+                BorderThickness="1"
+                Padding="12"
+                CornerRadius="6">
 
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                <TextBlock Text="Butik:" Width="60" VerticalAlignment="Center"/>
-                <ComboBox Width="200"
-                          ItemsSource="{Binding Stores}"
-                          SelectedItem="{Binding SelectedStore}"
-                          DisplayMemberPath="Butiksnamn"/>
+            <StackPanel Orientation="Vertical">
+
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <TextBlock Text="Butik:"
+                               Width="60"
+                               VerticalAlignment="Center"/>
+
+                    <ComboBox Width="220"
+                              ItemsSource="{Binding Stores}"
+                              SelectedItem="{Binding SelectedStore}"
+                              DisplayMemberPath="Butiksnamn"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <TextBlock Text="Bok:"
+                               Width="60"
+                               VerticalAlignment="Center"/>
+
+                    <ComboBox Width="360"
+                              ItemsSource="{Binding Books}"
+                              SelectedItem="{Binding SelectedBook}"
+                              DisplayMemberPath="Titel"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Antal:"
+                               Width="60"
+                               VerticalAlignment="Center"/>
+
+                    <TextBox Width="80"
+                             Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <Button Content="Lägg till"
+                            Width="110"
+                            Margin="12,0,0,0"
+                            Command="{Binding AddCommand}"/>
+
+                    <Button Content="Ta bort"
+                            Width="110"
+                            Margin="8,0,0,0"
+                            Command="{Binding RemoveCommand}"/>
+                </StackPanel>
+
             </StackPanel>
+        </Border>
 
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                <TextBlock Text="Bok:" Width="60" VerticalAlignment="Center"/>
-                <ComboBox Width="300"
-                          ItemsSource="{Binding Books}"
-                          SelectedItem="{Binding SelectedBook}"
-                          DisplayMemberPath="Titel"/>
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Antal:" Width="60" VerticalAlignment="Center"/>
-                <TextBox Width="80"
-                         Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}" />
-
-                <Button Content="Lägg till"
-                        Width="100"
-                        Margin="10,0,0,0"
-                        Command="{Binding AddCommand}" />
-
-                <Button Content="Ta bort"
-                        Width="100"
-                        Margin="10,0,0,0"
-                        Command="{Binding RemoveCommand}" />
-            </StackPanel>
-        </StackPanel>
     </Grid>
 </Window>
