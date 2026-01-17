@@ -50,10 +50,10 @@ public class MainWindowViewModel : ViewModelBase
         AddCommand = new RelayCommand(AddAsync);
         RemoveCommand = new RelayCommand(RemoveAsync);
 
-        ExitCommand = new RelayCommand(async () =>
+        ExitCommand = new RelayCommand(() => 
         {
             Application.Current.Shutdown();
-            await Task.CompletedTask;
+            return Task.CompletedTask;
         });
 
 
